@@ -1,4 +1,3 @@
-sudo su
 apt install -y openssh-server
 if [ -f ${1} ]; then
 	sudo cp $1 $1_backup	
@@ -44,8 +43,8 @@ fi
 
 string_5="PasswordAuthentication yes"
 if grep -q "${string_5}" "$1"; then
-    echo "字符串 "${string_5}" 存在于文件 "${1}" 中。"
-	sed -i "/${string_5}/s/^/#/" $1
+    # echo "字符串 "${string_5}" 存在于文件 "${1}" 中。"
+	# sed -i "/${string_5}/s/^/#/" $1
 	sed -i "/${string_5}/s/^/#/; /$string_5/a $string_5" $1
 else
     echo "字符串 "${string_5}" 不存在于文件 "${1}" 中。"
