@@ -1,0 +1,2 @@
+git pull origin master --allow-unrelated-histories
+如果 pull 失败，执行 git status，查看是哪个文件造成冲突，执行 git add file 或 git rm file
