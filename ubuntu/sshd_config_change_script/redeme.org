@@ -1,0 +1,7 @@
+sshd_config_backup 是原始文件的备份
+
+sshd_config 是基于“原始文件的备份”的拷贝
+
+sshd_config.old 是脚本对 sshd_config 进行拷贝
+
+sshd_config.sh 是进行 sshd_config 配置的脚本

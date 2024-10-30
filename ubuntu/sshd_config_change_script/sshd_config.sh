@@ -25,8 +25,8 @@ append_line_into_file () {
 	echo do
 	echo $LINE >> $FILE
 }
-# CONFIG="/etc/ssh/sshd_config"
-CONFIG="./sshd_config"
+CONFIG="/etc/ssh/sshd_config"
+# CONFIG="./sshd_config"
 cp $CONFIG $CONFIG.old
 
 string_1="Port 22"
