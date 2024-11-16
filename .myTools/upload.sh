@@ -2,6 +2,8 @@
 # ssh-add ~/.ssh/github_id_rsa
 # ssh -T git@github.com
 
+cd $(git rev-parse --show-toplevel)                                                                                                                                                                             
+
 git add .
 
 git commit -m "test"
