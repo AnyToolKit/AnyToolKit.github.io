@@ -1,3 +1,4 @@
+# 通过输入sshd_config文件绝对路径来运行该脚本，脚本在运行前会先进行针对sshd_config进行备份，然后再配置
 apt install -y openssh-server
 if [ -f ${1} ]; then
 	cp $1 $1_backup	
