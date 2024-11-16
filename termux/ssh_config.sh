@@ -1,5 +1,6 @@
-# pkg update
-# pkg install -y openssh-server
+# 需要安装 termux、termux-boot
+
+pkg install -y openssh
 
 # 获取当前用户的家目录
 home_dir="$HOME"
@@ -19,3 +20,10 @@ if [ ! -d "$ssh_dir" ]; then
 	fi
 fi
 
+if [ ! -f "~/.termux/boot/start-sshd" ]; then
+	cat > ~/.termux/boot/start-sshd << end
+#!/data/data/com.termux/files/usr/bin/sh
+termux-wake-lock
+sshd
+end
+fi
