@@ -11,7 +11,7 @@ case $1 in
 		pkg install -y vim emacs
 
 		# 安装常用工具
-		pkg install -y net-tools git wget curl
+		pkg install -y net-tools git wget curl tree
 
 		pkg install -y openssh
 		;;
