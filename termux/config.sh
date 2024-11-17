@@ -12,7 +12,7 @@ case $1 in
 		pkg install -y vim emacs
 
 		# 安装常用工具
-		pkg install -y net-tools git wget curl tree screen frp
+		pkg install -y net-tools git wget curl tree screen proot frp 
 
 		pkg install -y openssh
 		;;	
