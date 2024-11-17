@@ -25,6 +25,18 @@ case $1 in
 
 		pkg update
 		;;
+	backup)
+		termux-setup-storage
+		cd $PREFIX/..
+		tar -zcf /sdcard/termux-backup.tar.gz home usr		
+		;;
+	restore)
+		termux-setup-storage
+		cd $PREFIX/..
+		# --recursive-unlink：递归删除目标目录中的已存在文件/目录，防止解压时的冲突。
+		# --preserve-permissions：保留文件的原始权限设置（包括所有者和用户组）。		
+		tar -zxf /sdcard/termux-backup.tar.gz --recursive-unlink --preserve-permissions
+		;;
 	*)							# 默认显示用户信息
 		# echo "用法：$0 {start|stop|status|restart}"
 		echo "用法：$0 {base|CS}"
