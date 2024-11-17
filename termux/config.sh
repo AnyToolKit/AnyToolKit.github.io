@@ -50,6 +50,6 @@ case $1 in
 		;;
 	*)							# 默认显示用户信息
 		# echo "用法：$0 {start|stop|status|restart}"
-		echo "用法：$0 {base|CS}"
+		echo "用法：$0 {base|CS|BaseBackup|Baserestore|backup|restore}"
 		;;
 esac
