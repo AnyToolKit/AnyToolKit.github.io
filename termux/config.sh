@@ -1,4 +1,4 @@
-case config in
+case $1 in
 	base)
 		# 更新与升级
 		pkg update
