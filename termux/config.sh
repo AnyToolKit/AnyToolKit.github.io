@@ -16,6 +16,7 @@ case $1 in
 		pkg install -y openssh
 		;;
 	CS)
+		cp $PREFIX/etc/apt/sources.list $PREFIX/etc/apt/sources.list.bak
 		sed -i 's@^\(deb.*stable main\)$@#\1\ndeb https://mirrors.tuna.tsinghua.edu.cn/termux/termux-packages-24 stable main@' $PREFIX/etc/apt/sources.list
 
 		sed -i 's@^\(deb.*games stable\)$@#\1\ndeb https://mirrors.tuna.tsinghua.edu.cn/termux/game-packages-24 games stable@' $PREFIX/etc/apt/sources.list.d/game.list
