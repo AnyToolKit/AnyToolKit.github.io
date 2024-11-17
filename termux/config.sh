@@ -1,5 +1,5 @@
 case config in
-	*)
+	base)
 		# 更新与升级
 		pkg update
 		pkg upgrade
@@ -14,5 +14,9 @@ case config in
 		pkg install -y net-tools git wget curl
 
 		pkg install -y openssh
+		;;
+	*)
+		# echo "用法：$0 {start|stop|status|restart}"
+		echo "用法：$0 {base}"
 		;;
 esac
