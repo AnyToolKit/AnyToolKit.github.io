@@ -1,4 +1,4 @@
-case $1 in
+case \$1 in
 	base)
 		# 更新与升级
 		pkg update
@@ -17,6 +17,6 @@ case $1 in
 		;;
 	*)
 		# echo "用法：$0 {start|stop|status|restart}"
-		echo "用法：$0 {base}"
+		echo "用法：\$0 {base}"
 		;;
 esac
