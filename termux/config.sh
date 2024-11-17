@@ -1,5 +1,6 @@
 case $1 in
 	base)						# 进行基本配置
+		termux-setup-storage	# 获取访问手机存储的权限
 		# 更新与升级
 		pkg update
 		pkg upgrade
@@ -25,6 +26,11 @@ case $1 in
 
 		pkg update
 		;;
+	BaseBackup)
+		termux-setup-storage
+		cd $PREFIX/..
+		tar -zcf /sdcard/termux-BaseBackup.tar.gz home usr		
+		;;	
 	backup)
 		termux-setup-storage
 		cd $PREFIX/..
@@ -36,6 +42,11 @@ case $1 in
 		# --recursive-unlink：递归删除目标目录中的已存在文件/目录，防止解压时的冲突。
 		# --preserve-permissions：保留文件的原始权限设置（包括所有者和用户组）。		
 		tar -zxf /sdcard/termux-backup.tar.gz --recursive-unlink --preserve-permissions
+		;;
+	BaseRestore)
+		termux-setup-storage
+		cd $PREFIX/..
+		tar -zxf /sdcard/termux-BaseBackup.tar.gz --recursive-unlink --preserve-permissions
 		;;
 	*)							# 默认显示用户信息
 		# echo "用法：$0 {start|stop|status|restart}"
