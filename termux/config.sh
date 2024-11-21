@@ -3,7 +3,7 @@ case $1 in
 		termux-setup-storage	# 获取访问手机存储的权限
 		# 更新与升级
 		pkg update
-		pkg upgrade
+		pkg upgrade -y
 
 		# 安装欢迎界面列出来的软件
 		pkg install -y root-repo x11-repo 
