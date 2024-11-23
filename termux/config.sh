@@ -12,8 +12,7 @@ case $1 in
 		pkg install -y vim emacs
 
 		# 安装常用工具
-		pkg install -y net-tools git wget curl tree screen proot frp android-tools tmux gradle
-		# pkg install -y scrcpy 
+		pkg install -y net-tools git wget curl tree screen proot frp android-tools tmux gradle nginx
 
 		pkg install -y openssh
 		;;	
