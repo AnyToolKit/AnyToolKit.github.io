@@ -12,7 +12,7 @@ case $1 in
 		pkg install -y vim emacs
 
 		# 安装常用工具
-		pkg install -y net-tools git wget curl tree screen proot frp android-tools tmux gradle nginx
+		pkg install -y net-tools git wget curl tree screen proot frp android-tools tmux gradle nginx which
 
 		pkg install -y openssh
 		;;	
@@ -50,6 +50,6 @@ case $1 in
 		;;
 	*)							# 默认显示用户信息
 		# echo "用法：$0 {start|stop|status|restart}"
-		echo "用法：$0 {base|CS|BaseBackup|Baserestore|backup|restore}"
+		echo "用法：$0 {base|CS|BaseBackup|BaseRestore|backup|restore}"
 		;;
 esac
