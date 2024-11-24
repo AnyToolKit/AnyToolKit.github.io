@@ -18,6 +18,7 @@ case $1 in
 		;;
 	tmuxConfig)
 		git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+		tmux new -d -s temp_session
 		cat > .tmux.conf << end
 # 将下面内容复制到`~/.tmux.conf`
 # List of plugins
@@ -74,6 +75,7 @@ set -g history-limit 50000
 run '~/.tmux/plugins/tpm/tpm'	# 记住，这个必须放在.tumx.conf的底部
 end
 		~/.tmux/plugins/tpm/bin/install_plugins
+		tmux kill-session -t temp_session
 		;;		
 	CS)
 		cp $PREFIX/etc/apt/sources.list $PREFIX/etc/apt/sources.list.bak
