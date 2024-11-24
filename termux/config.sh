@@ -17,10 +17,25 @@ case $1 in
 		pkg install -y openssh
 		;;
 	tmuxConfig)
-		git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-		tmux new -d -s temp_session
+		# 指定文件路径
+		tmux_conf="$HOME/.tmux.conf"
+		tpm="$HOME/.tmux/plugins/tpm"
+		val=$PWD
+		cd $HOME
+
+		# 判断 tpm 目录是否存在，不存在则克隆
+		if [ ! -d "$tpm" ]; then
+			git clone https://github.com/tmux-plugins/tpm "$tpm"
+		fi
+
+		# 判断 tmux.conf 文件是否存在，存在则删除
+		if [ -f "$tmux_conf" ]; then
+			rm -rf "$tmux_conf"
+		fi
+		
+		tmux new -d -s temp_session		
 		cat > .tmux.conf << end
-# 将下面内容复制到`~/.tmux.conf`
+# 将下面内容复制到 ~/.tmux.conf
 # List of plugins
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible' # 
@@ -74,8 +89,10 @@ set -g history-limit 50000
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'	# 记住，这个必须放在.tumx.conf的底部
 end
+		tmux source-file ~/.tmux.conf
 		~/.tmux/plugins/tpm/bin/install_plugins
 		tmux kill-session -t temp_session
+		cd $val
 		;;		
 	CS)
 		cp $PREFIX/etc/apt/sources.list $PREFIX/etc/apt/sources.list.bak
@@ -113,7 +130,7 @@ end
 		# echo "用法：$0 {start|stop|status|restart}"
 		echo "用法：$0 {base|tmuxConfig|CS|BaseBackup|BaseRestore|backup|restore}"
 		echo "base：安装基本工具和常用工具"
-		echo "tmuxconfig：配置tmux插件"
+		echo "tmuxConfig：配置tmux插件"
 		echo "CS：换源，使用清华源"
 		echo "BaseBackup：基本备份"
 		echo "Baserestore：基本恢复"
