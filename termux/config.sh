@@ -93,7 +93,37 @@ end
 		~/.tmux/plugins/tpm/bin/install_plugins
 		tmux kill-session -t temp_session
 		cd $val
-		;;		
+		;;
+	emacsGTD)
+		#!/bin/bash
+
+		# 使用 $HOME 确保路径正确
+		EMACS_DIR="$HOME/.emacs.d"
+		INIT_FILE="$EMACS_DIR/init.el"
+
+		# 检查 ~/.emacs.d 目录是否存在
+		if [ ! -d "$EMACS_DIR" ]; then
+			echo "$EMACS_DIR 目录不存在，正在创建..."
+			mkdir -p "$EMACS_DIR"
+		fi
+
+		# 检查 ~/.emacs.d/init.el 文件是否存在
+		if [ -f "$INIT_FILE" ]; then
+			echo "$INIT_FILE 文件存在，正在删除..."
+			rm "$INIT_FILE"
+		fi
+
+		cat > $HOME/.emacs.d/init.el > $HOME/.emacs.d/init.el <<EOF
+(setq org-todo-keywords
+      '((sequence "REPORT(@/!)" "BUG(@/!)" "KNOWNCAUSE(@/!)" "|" "FIXED(!)")
+	(sequence "TODO(t!)" "|" "DONE(!)" "CANCELED(@/!)")
+	))
+
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-ca" 'org-agenda)
+EOF
+		;;
 	CS)
 		cp $PREFIX/etc/apt/sources.list $PREFIX/etc/apt/sources.list.bak
 		sed -i 's@^\(deb.*stable main\)$@#\1\ndeb https://mirrors.tuna.tsinghua.edu.cn/termux/termux-packages-24 stable main@' $PREFIX/etc/apt/sources.list
@@ -128,13 +158,15 @@ end
 		;;
 	*)							# 默认显示用户信息
 		# echo "用法：$0 {start|stop|status|restart}"
-		echo "用法：$0 {base|tmuxConfig|CS|BaseBackup|BaseRestore|backup|restore}"
+		echo "用法：$0 {base|tmuxConfig|emacsGTD|CS|BaseBackup|BaseRestore|backup|restore}"
 		echo "base：安装基本工具和常用工具"
 		echo "tmuxConfig：配置tmux插件"
+		echo "emacsGTD：配置emacs的org-mode的GTD（任务管理）"
 		echo "CS：换源，使用清华源"
 		echo "BaseBackup：基本备份"
 		echo "Baserestore：基本恢复"
 		echo "backup：常规备份"
 		echo "restore：常规恢复"
+		echo -e "推荐用法：\n$0 base; $0 tmuxConfig; $0 emacsGTD"
 		;;
 esac
