@@ -22,19 +22,25 @@ CONFIG_1="$HOME/.bashrc"
 CONFIG_2="$HOME/.bash_profile"
 string_1="emacs=\"emacs --with-profile"
 
-if [ ! -f "$CONFIG_1" ]; then
-        echo ""
+if [ $# -lt 1 ]; then
+        echo "Usage："
+        echo "$0 args"
 else
-        cp $CONFIG_1 $CONFIG_1.old
-        delete_line_with_special_word   $CONFIG_1 "$string_1"
-        append_line_into_file           $CONFIG_1  "emacs=\"emacs --with-profile $1\""
-        source $CONFIG_1
-        echo "已配置emacs默认配置文件"
-fi
+        if [ ! -f "$CONFIG_1" ]; then
+                echo ""
+        else
+                cp $CONFIG_1 $CONFIG_1.old
+                delete_line_with_special_word   $CONFIG_1 "$string_1"
+                append_line_into_file           $CONFIG_1  "alias emacs=\"emacs --with-profile $1\""
+                echo "已配置emacs默认配置文件"
+                echo -e "\n接下来需要运行source命令使配置生效：\nsource $CONFIG_1"
+        fi
 
-if [ ! -f "$CONFIG_2" ]; then
-        echo ""
-else
-        cp $CONFIG_2 $CONFIG_2.old
-        delete_line_with_special_word   $CONFIG_2 "$string_1"
+        if [ ! -f "$CONFIG_2" ]; then
+                echo ""
+        else
+                cp $CONFIG_2 $CONFIG_2.old
+                delete_line_with_special_word   $CONFIG_2 "$string_1"
+        fi
+
 fi
