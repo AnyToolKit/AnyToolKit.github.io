@@ -5,7 +5,9 @@ if [ $# -lt 1 ]; then
 	echo -e "\n示例："
 	echo "$0 \"Intel(R) Ethernet Connection (7) I219-V\""
 else
-	echo "按Ctrl+c结束"
+	echo -e "\n按Ctrl+c结束\n"
+
+	i=0;
 	while true; do
 		# result=$(ipconfig -all | grep -A 4 -B 2 "Intel(R) Ethernet Connection (7) I219-V" | grep -w "Media disconnected" | awk -F ':' '{print $2}' | xargs)
 		result=$(ipconfig -all | grep -A 4 -B 2 "$1" | grep -w "Media disconnected" | awk -F ':' '{print $2}' | xargs)	
@@ -14,7 +16,8 @@ else
 			echo "网络适配器未识别"
 			sleep 1
 		else
-			echo "网络适配器已识别"
+			echo -e "网络适配器已识别\n"
+			echo -e "当前时间$(date)，第$((++i))次ping网口："
 			ping 192.168.2.100
 			sleep 1
 		fi
