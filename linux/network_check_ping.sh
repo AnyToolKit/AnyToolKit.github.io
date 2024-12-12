@@ -16,7 +16,7 @@ else
 			echo "网络适配器未识别"
 			sleep 1
 		else
-			echo -e "网络适配器已识别\n"
+			echo -e "\n网络适配器已识别"
 			echo -e "当前时间$(date)，第$((++i))次ping网口："
 			ping 192.168.2.100
 			sleep 1
