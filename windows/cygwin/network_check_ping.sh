@@ -4,6 +4,7 @@ if [ $# -lt 1 ]; then
 	echo "首先在Cygwin终端执行\"ipconfig -all\"获取对应以太网的网络适配器的描述名称，然后在运行脚本的时候作为参数传递给脚本"
 	echo -e "\n示例："
 	echo "$0 \"Intel(R) Ethernet Connection (7) I219-V\""
+	echo "$0 \"Realtek PCIe GbE Family Controller\""
 else
 	echo -e "\n按Ctrl+c结束\n"
 
@@ -13,12 +14,12 @@ else
 		result=$(ipconfig -all | grep -A 4 -B 2 "$1" | grep -w "Media disconnected" | awk -F ':' '{print $2}' | xargs)	
 		
 		if [ "$result" != "" ]; then
-			echo "网络适配器未识别"
+			echo -e "\e[31m当前时间$(date)，网络适配器未识别\e[0m"
 		else
-			echo -e "\n网络适配器已识别"
-			echo -e "当前时间$(date)，第$((++i))次ping网口："
-			ping -w 1 192.168.2.100 # 设置超时时间为1秒，默认为4秒
+			echo -e "\n\e[32m当前时间$(date)，网络适配器已识别\e[0m"
+			# echo -e "当前时间$(date)，第$((++i))次ping网口："
+			# ping -w 1 192.168.2.100 # 设置超时时间为1秒，默认为4秒
 		fi
-		sleep 0.5				# 延时500ms
+		sleep 1				# 延时500ms
 	done
 fi
