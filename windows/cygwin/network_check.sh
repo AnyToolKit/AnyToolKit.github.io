@@ -14,12 +14,12 @@ else
 		result=$(ipconfig -all | grep -A 4 -B 2 "$1" | grep -w "Media disconnected" | awk -F ':' '{print $2}' | xargs)	
 		
 		if [ "$result" != "" ]; then
-			echo -e "\e[31m网络适配器未识别\e[0m"
+			echo -e "\e[31m当前时间$(date)，网络适配器未识别\e[0m"
 		else
-			echo -e "\n网络适配器已识别"
-			echo -e "当前时间\e[33m$(date)\e[0m，第\e[32m$((++i))\e[0m次ping网口："
-			ping -w 1 192.168.2.100 # 设置超时时间为1秒，默认为4秒
+			echo -e "\n\e[32m当前时间$(date)，网络适配器已识别\e[0m"
+			# echo -e "当前时间$(date)，第$((++i))次ping网口："
+			# ping -w 1 192.168.2.100 # 设置超时时间为1秒，默认为4秒
 		fi
-		sleep 0.5				# 延时500ms
+		sleep 1				# 延时500ms
 	done
 fi
