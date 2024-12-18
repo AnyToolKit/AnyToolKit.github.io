@@ -1,3 +1,7 @@
+# cygwin编码环境：65001
+# 在cygwin环境中设置编码：cmd /c chcp 65001
+# 可以将设置编码的代码添加到cygwin环境的家目录下的 .bash_profile 文件中
+
 check_str1="Media disconnected"
 
 if [ $# -lt 1 ]; then
