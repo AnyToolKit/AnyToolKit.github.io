@@ -1,0 +1,1 @@
+pnputil /disable-device "HID\GXTP7385&Col01\4&36625b9a&0&0000"
