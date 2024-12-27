@@ -6,18 +6,18 @@
 
 #!/usr/bin/expect
 
+set target_host [lindex $argv 0]
+set passwd [lindex $argv 1]
+
 set command_1 "info 1> /dev/null 2> temp.txt"
 set command_2 "sed -n '/cat >/,/chmod 600/p' temp.txt"
 
 # 检查参数数量
 if {$argc < 1} {
-       # puts "Usage: $argv0 <target_host>"
+	   # puts "Usage: $argv0 <target_host>"
 	   puts "expect $argv0 root@segfault.net segfault"
-       exit 1
-   }
-   
-   set target_host [lindex $argv 0]
-   set passwd [lindex $argv 1]   
+	   exit 1
+   }         
 
    spawn ssh "$target_host"
 
