@@ -7,48 +7,39 @@
 #!/usr/bin/expect
 
 # 检查参数数量
-# if {$argc < 1} {
-#        puts "Usage: $argv0 <target_host>"
-#        exit 1
-#    }
+if {$argc < 1} {
+       # puts "Usage: $argv0 <target_host>"
+	   puts "$argv0 root@segfault.net segfault"
+       exit 1
+   }
+   
+   set target_host [lindex $argv 0]
+   set passwd [lindex $argv 1]
 
-set thc_host "root@segfault.net"
-set thc_passwd "root@segfault.net"
-# set target_host [lindex $argv 0]
-# set passwd [lindex $argv 1]
+   spawn ssh "$target_host"
 
-# spawn ssh "$target_host"
-spawn ssh "$thc_host"
+   while {1} {
+			 expect {
+				 "yes/no" {
+					 send "yes\r"
+					 exp_continue
+				 }
+				 "password" {
+					 send "$passwd\r"
+					 exp_continue
+				 }
+				 "Press" {
+					 send "\n"
+					 exp_continue
+				 }
+				 "y/N" {
+					 send "\n"
+					 exp_continue
+				 }
+				 "root" {
+					 break;
+				 }
+			 }		  
+		 }
 
-expect {
-	"yes/no" {
-		send "yes\r"
-		exit
-	}	
-}
-
-expect {
-	"password" {
-		# send "$passwd\r"
-		send "$thc_passwd\r"
-		exit
-	}
-}
-
-while {1} {
-		  expect {				 
-			  "Press" {
-				  send "\n"
-				  exp_continue
-			  }
-			  "y/N" {
-				  send "\n"
-				  exp_continue
-			  }
-			  "root" {
-				  break;
-			  }
-		  }		  
-	  }
-
-	  interact
+		 interact
