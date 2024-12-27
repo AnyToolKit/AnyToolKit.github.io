@@ -4,10 +4,10 @@
 # 依赖环境：Cygwin安装expect
 # 运行示例：expect thc.sh root@segfault.net segfault
 
-# info 1> /dev/null 2> temp.txt
-# sed -n '/cat >/,/chmod 600/p' temp.txt
-
 #!/usr/bin/expect
+
+set command_1 "info 1> /dev/null 2> temp.txt"
+set command_2 "sed -n '/cat >/,/chmod 600/p' temp.txt"
 
 # 检查参数数量
 if {$argc < 1} {
@@ -17,9 +17,10 @@ if {$argc < 1} {
    }
    
    set target_host [lindex $argv 0]
-   set passwd [lindex $argv 1]
+   # set passwd [lindex $argv 1]
+   set target_host thc_1
 
-   spawn ssh "$target_host" '$(info 1> /dev/null 2> temp.txt; sed -n '/cat >/,/chmod 600/p' temp.txt)'
+   spawn ssh "$target_host"
 
    while {1} {
 			 expect {
@@ -40,9 +41,12 @@ if {$argc < 1} {
 					 exp_continue
 				 }
 				 "root" {
+					 send "$command_1\r"
+					 send "$command_2\r"
+					 send "exit\n"
 					 break;
 				 }
 			 }		  
-		 }
-
+		 }		 		 
+		 
 		 interact
