@@ -1,10 +1,9 @@
+#!/usr/bin/expect
 # 运行环境：Cygwin
 # 编码：65001
 # 设置编码方式：在Cygwin的家目录下的.bash_profile中添加语句：cmd /c chcp 65001
 # 依赖环境：Cygwin安装expect
 # 运行示例：expect thc.sh root@segfault.net segfault
-
-#!/usr/bin/expect
 
 set target_host [lindex $argv 0]
 set passwd [lindex $argv 1]
@@ -15,6 +14,7 @@ set command_2 "sed -n '/cat >/,/chmod 600/p' temp.txt"
 # 检查参数数量
 if {$argc < 1} {
 	   # puts "Usage: $argv0 <target_host>"
+	   puts "Usage:"
 	   puts "expect $argv0 root@segfault.net segfault"
 	   exit 1
    }         
