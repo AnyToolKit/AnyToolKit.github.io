@@ -7,10 +7,10 @@
 #!/usr/bin/expect
 
 # 检查参数数量
-if {$argc < 1} {
-       puts "Usage: $argv0 <target_host>"
-       exit 1
-   }
+# if {$argc < 1} {
+#        puts "Usage: $argv0 <target_host>"
+#        exit 1
+#    }
 
    set thc_host "root@segfault.net"
    set thc_passwd "root@segfault.net"
