@@ -23,12 +23,15 @@ spawn ssh "$thc_host"
 expect {
 	"yes/no" {
 		send "yes\r"
-		exp_continue
-	}
+		exit
+	}	
+}
+
+expect {
 	"password" {
 		# send "$passwd\r"
 		send "$thc_passwd\r"
-		exp_continue
+		exit
 	}
 }
 
