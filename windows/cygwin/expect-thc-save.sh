@@ -19,7 +19,7 @@ if {$argc < 1} {
    set target_host [lindex $argv 0]
    set passwd [lindex $argv 1]
 
-   spawn ssh "$target_host" 'info 1> /dev/null 2> temp.txt; sed -n '/cat >/,/chmod 600/p' temp.txt'
+   spawn ssh "$target_host" '$(info 1> /dev/null 2> temp.txt; sed -n '/cat >/,/chmod 600/p' temp.txt)'
 
    while {1} {
 			 expect {
