@@ -9,7 +9,7 @@
 # 检查参数数量
 if {$argc < 1} {
        # puts "Usage: $argv0 <target_host>"
-	   puts "$argv0 root@segfault.net segfault"
+	   puts "expect $argv0 root@segfault.net segfault"
        exit 1
    }
    
