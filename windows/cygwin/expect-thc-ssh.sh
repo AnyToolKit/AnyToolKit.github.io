@@ -12,37 +12,40 @@
 #        exit 1
 #    }
 
-   set thc_host "root@segfault.net"
-   set thc_passwd "root@segfault.net"
-   # set target_host [lindex $argv 0]
-   # set passwd [lindex $argv 1]
+set thc_host "root@segfault.net"
+set thc_passwd "root@segfault.net"
+# set target_host [lindex $argv 0]
+# set passwd [lindex $argv 1]
 
-   # spawn ssh "$target_host"
-   spawn ssh "$thc_host"
+# spawn ssh "$target_host"
+spawn ssh "$thc_host"
 
-   while {1} {
-			 expect {
-				 "yes/no" {
-					 send "yes\r"
-					 exp_continue
-				 }
-				 "password" {
-					 # send "$passwd\r"
-					 send "$thc_passwd\r"
-					 exp_continue
-				 }
-				 "Press" {
-					 send "\n"
-					 exp_continue
-				 }
-				 "y/N" {
-					 send "\n"
-					 exp_continue
-				 }
-				 "root" {
-					 break;
-				 }
-			 }		  
-		 }
+expect {
+	"yes/no" {
+		send "yes\r"
+		exp_continue
+	}
+	"password" {
+		# send "$passwd\r"
+		send "$thc_passwd\r"
+		exp_continue
+	}
+}
 
-		 interact
+while {1} {
+		  expect {				 
+			  "Press" {
+				  send "\n"
+				  exp_continue
+			  }
+			  "y/N" {
+				  send "\n"
+				  exp_continue
+			  }
+			  "root" {
+				  break;
+			  }
+		  }		  
+	  }
+
+	  interact
