@@ -18,7 +18,7 @@
    # set passwd [lindex $argv 1]
 
    # spawn ssh "$target_host"
-   spawn ssh "thc_host"
+   spawn ssh "$thc_host"
 
    while {1} {
 			 expect {
