@@ -11,11 +11,14 @@ if {$argc < 1} {
        puts "Usage: $argv0 <target_host>"
        exit 1
    }
-   
+
+   set thc_host "root@segfault.net"
+   set thc_passwd "root@segfault.net"
    set target_host [lindex $argv 0]
    set passwd [lindex $argv 1]
 
-   spawn ssh "$target_host"
+   # spawn ssh "$target_host"
+   spawn ssh "thc_host"
 
    while {1} {
 			 expect {
@@ -24,7 +27,7 @@ if {$argc < 1} {
 					 exp_continue
 				 }
 				 "password" {
-					 send "$passwd\r"
+					 send "$thc_passwd\r"
 					 exp_continue
 				 }
 				 "Press" {
