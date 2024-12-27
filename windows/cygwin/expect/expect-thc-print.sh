@@ -17,8 +17,7 @@ if {$argc < 1} {
    }
    
    set target_host [lindex $argv 0]
-   # set passwd [lindex $argv 1]
-   set target_host thc_1
+   set passwd [lindex $argv 1]   
 
    spawn ssh "$target_host"
 
