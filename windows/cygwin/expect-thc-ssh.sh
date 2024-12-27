@@ -14,8 +14,8 @@ if {$argc < 1} {
 
    set thc_host "root@segfault.net"
    set thc_passwd "root@segfault.net"
-   set target_host [lindex $argv 0]
-   set passwd [lindex $argv 1]
+   # set target_host [lindex $argv 0]
+   # set passwd [lindex $argv 1]
 
    # spawn ssh "$target_host"
    spawn ssh "thc_host"
@@ -27,6 +27,7 @@ if {$argc < 1} {
 					 exp_continue
 				 }
 				 "password" {
+					 # send "$passwd\r"
 					 send "$thc_passwd\r"
 					 exp_continue
 				 }
