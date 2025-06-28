@@ -1,0 +1,3 @@
+* termux+uiautomator2自动化
+
+** termux+uiautomator2给多个QQ好友点赞
