@@ -1,47 +1,47 @@
 * P1
 
 #+begin_src python :tangle testdemo.py
-  import uiautomator2 as u2
+import uiautomator2 as u2
 
-  def main():
-      u = u2.connect('192.168.1.101')    
-      
-      # 输入设备
-      # print(u.info)
+def main():
+    u = u2.connect('192.168.1.101')    
+    
+    # 输入设备
+    # print(u.info)
 
-      # QQ好友点赞
-      u.app_start('com.tencent.mobileqq')    
-      u.click(88,173)
-      u(text='夜闹').click()
-      u.click(975,695)
-      for i in range(10):
-          u.click(1018,1157)
+    # QQ好友点赞
+    u.app_start('com.tencent.mobileqq')    
+    u.click(88,173)
+    u(text='夜闹').click()
+    u.click(975,695)
+    for i in range(10):
+        u.click(1018,1157)
 
-      # # 元素定位
-      # xml = u.dump_hierarchy()
-      # # print(xml)
-      # # 保存到文件（方便分析）
-      # with open("ui_dump.xml", "w", encoding="utf-8") as f:
-      #   f.write(xml)
+    # # 元素定位
+    # xml = u.dump_hierarchy()
+    # # print(xml)
+    # # 保存到文件（方便分析）
+    # with open("ui_dump.xml", "w", encoding="utf-8") as f:
+    #   f.write(xml)
 
-  if __name__ == '__main__':
-      main()
+if __name__ == '__main__':
+    main()
 #+end_src
 
 * P2
 
 #+begin_src python :tangle testdemo.py
-  import uiautomator2 as u2
+import uiautomator2 as u2
 
-  d = u2.connect('192.168.1.101')    
+d = u2.connect('192.168.1.101')    
 
-  d.app_start('com.tencent.mobileqq')
-  d.xpath('//*[@resource-id="com.tencent.mobileqq:id/e3u"]/android.widget.FrameLayout[1]').click()
-  d.xpath('//*[@resource-id="com.tencent.mobileqq:id/ury"]').click()
-  # d.xpath('//*[@resource-id="com.tencent.mobileqq:id/l0l"]').click()
-  d.click(949,650)
-  for i in range(6):
-    for j in range(10):
-      xpath = f'//*[@resource-id="com.tencent.mobileqq:id/kzn"]/android.widget.LinearLayout[{i+1}]/android.widget.RelativeLayout[1]/android.widget.RelativeLayout[1]/android.widget.ImageView[1]'
-      d.xpath(xpath).click()
+d.app_start('com.tencent.mobileqq')
+d.xpath('//*[@resource-id="com.tencent.mobileqq:id/e3u"]/android.widget.FrameLayout[1]').click()
+d.xpath('//*[@resource-id="com.tencent.mobileqq:id/ury"]').click()
+# d.xpath('//*[@resource-id="com.tencent.mobileqq:id/l0l"]').click()
+d.click(949,650)
+for i in range(6):
+  for j in range(10):
+    xpath = f'//*[@resource-id="com.tencent.mobileqq:id/kzn"]/android.widget.LinearLayout[{i+1}]/android.widget.RelativeLayout[1]/android.widget.RelativeLayout[1]/android.widget.ImageView[1]'
+    d.xpath(xpath).click()
 #+end_src
