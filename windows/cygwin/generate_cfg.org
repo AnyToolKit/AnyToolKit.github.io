@@ -1,12 +1,12 @@
+* 安卓自动化
 
-
-* 执行方式
+** 执行方式
 
 #+begin_src bash :tangle no
 bash cfg.sh
 #+end_src
 
-* cfg.json
+** cfg.json
 
 #+begin_src json :tangle cfg.json 
 {
@@ -31,56 +31,14 @@ bash cfg.sh
     },
     "function":[
         {"download_application":"y"},
-        {"install_application":"y"},
+        {"android_install_application":"y"},
+        {"termux_install_application":"y"},
         {"get_subscription":"y"}
     ]
 }
 #+end_src
 
-* cfg.sh
-
-** V1
-
-下载所有文件，如果文件已存在则跳过
-
-#+begin_src bash :tangle no
-#!/usr/bin/bash
-
-# 定义总文件数组
-apk_array=($(jq -r '.android.value[] | keys[]' cfg.json))
-# printf '%s\n' "${apk_array[@]}"
-
-# 定义要安装文件的数组
-apk_files=()
-
-# 下载安装文件，如果文件已存在则跳过
-download_application() {  
-  while IFS= read -r url; do
-    if [[ "$url" == \$\(* ]]; then url=$(eval echo "$url"); fi    
-    apk_files+=($(basename "$url"))
-    if [[ ! -f $(basename "$url") ]]; then wget --no-check-certificate "$url"; fi
-  done < <(jq -r '.android.url[].[]' cfg.json)
-}
-
-# 安装文件
-install_application() {    
-  # printf '%s\n' "${apk_files[@]}"
-  for i in  "${apk_files[@]}"; do
-    adb install "$i"
-  done
-}
-
-function main() {
-  set -e
-  download_application
-  # install_application    
-}
-
-main
-
-#+end_src
-
-** v2
+** cfg.sh
 
 根据json文件中要下载文件对应的value判断是否下载，如果value值为y，则下载对应文件，否则跳过
 
@@ -90,11 +48,20 @@ main
 # 定义总文件数组
 apk_array=($(jq -r '.android.value[] | keys[]' cfg.json))
 # printf '%s\n' "${apk_array[@]}"
-
 # 定义要安装文件的数组
 apk_files=()
+# apt依赖数组
+APT_DEPENDENCIES=("dosfstools" "dos2unix" "expect" "parted" "dump")
 
-# 下载安装文件，如果文件已存在则跳过
+# # 下载安装文件，如果文件已存在则跳过
+# download_application() {  
+#   while IFS= read -r url; do
+#     if [[ "$url" == \$\(* ]]; then url=$(eval echo "$url"); fi    
+#     apk_files+=($(basename "$url"))
+#     if [[ ! -f $(basename "$url") ]]; then wget --no-check-certificate "$url"; fi
+#   done < <(jq -r '.android.url[].[]' cfg.json)
+# }
+# 根据json文件中要下载文件对应的value判断是否下载，如果value值为y，则下载对应文件，否则跳过
 download_application() {    
   for i in ${apk_array[@]}; do
     # printf '%s\n' $i;
@@ -104,24 +71,28 @@ download_application() {
       if [[ "$url" == \$\(* ]]; then url=$(eval echo "$url"); fi
       # echo "$url"
       apk_files+=($(basename "$url"))
-      if [[ ! -f $(basename "$url") ]]; then wget --no-check-certificate "$url"; fi
-      
+      if [[ ! -f $(basename "$url") ]]; then wget --no-check-certificate "$url"; fi      
     fi
   done
 }
 
 # 安装文件
-install_application() {    
+android_install_application() {    
   # printf '%s\n' "${apk_files[@]}"
   for i in  "${apk_files[@]}"; do
     adb install "$i"
   done
 }
 
+termux_install_application() {
+  apt-get update
+  apt-get -y install "${APT_DEPENDENCIES[@]}"
+}
+
 function main() {
   set -e
   download_application
-  install_application    
+  android_install_application    
 }
 
 main
