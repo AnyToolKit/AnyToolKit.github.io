@@ -1,0 +1,130 @@
+
+
+* 执行方式
+
+#+begin_src bash :tangle no
+bash cfg.sh
+#+end_src
+
+* cfg.json
+
+#+begin_src json :tangle cfg.json 
+{
+    "android":{
+        "url":[            
+            {"lawnchair":"$(curl -s https://api.github.com/repos/LawnchairLauncher/lawnchair/releases/latest | jq -r '.assets[].browser_download_url' | grep 'Lawnchair')"},
+            {"via":"https://res.viayoo.com/v1/via-release-cn.apk"},
+            {"termux":"$(curl -s https://api.github.com/repos/termux/termux-app/releases/latest | jq -r '.assets[].browser_download_url' | grep 'arm64')"},
+            {"clash-meta":"$(curl -s https://api.github.com/repos/MetaCubeX/ClashMetaForAndroid/releases/latest | jq -r '.assets[].browser_download_url' | grep 'arm64')"},
+            {"v2rayng":"$(curl -s https://api.github.com/repos/2dust/v2rayNG/releases/latest | jq -r '.assets[].browser_download_url' | grep 'arm64')"}
+        ],
+        "value":[
+            {"lawnchair":"y"},
+            {"via":"n"},
+            {"termux":"n"},
+            {"clash-meta":"n"},
+            {"v2rayng":"n"}
+        ]
+    },
+    "tolink":{
+        "tolink":"https://n0eb21.tsomoonyb.xyz/50e8e54c8e2a45a0b6886444127eb0e0"
+    },
+    "function":[
+        {"download_application":"y"},
+        {"install_application":"y"},
+        {"get_subscription":"y"}
+    ]
+}
+#+end_src
+
+* cfg.sh
+
+** V1
+
+下载所有文件，如果文件已存在则跳过
+
+#+begin_src bash :tangle no
+#!/usr/bin/bash
+
+# 定义总文件数组
+apk_array=($(jq -r '.android.value[] | keys[]' cfg.json))
+# printf '%s\n' "${apk_array[@]}"
+
+# 定义要安装文件的数组
+apk_files=()
+
+# 下载安装文件，如果文件已存在则跳过
+download_application() {  
+  while IFS= read -r url; do
+    if [[ "$url" == \$\(* ]]; then url=$(eval echo "$url"); fi    
+    apk_files+=($(basename "$url"))
+    if [[ ! -f $(basename "$url") ]]; then wget --no-check-certificate "$url"; fi
+  done < <(jq -r '.android.url[].[]' cfg.json)
+}
+
+# 安装文件
+install_application() {    
+  # printf '%s\n' "${apk_files[@]}"
+  for i in  "${apk_files[@]}"; do
+    adb install "$i"
+  done
+}
+
+function main() {
+  set -e
+  download_application
+  # install_application    
+}
+
+main
+
+#+end_src
+
+** v2
+
+根据json文件中要下载文件对应的value判断是否下载，如果value值为y，则下载对应文件，否则跳过
+
+#+begin_src bash :tangle cfg.sh
+#!/usr/bin/bash
+
+# 定义总文件数组
+apk_array=($(jq -r '.android.value[] | keys[]' cfg.json))
+# printf '%s\n' "${apk_array[@]}"
+
+# 定义要安装文件的数组
+apk_files=()
+
+# 下载安装文件，如果文件已存在则跳过
+download_application() {    
+  for i in ${apk_array[@]}; do
+    # printf '%s\n' $i;
+    value=$(jq -r ".android.value[] | select(has(\"$i\")) | .\"$i\"" cfg.json)
+    if [ "$value" == "y" ]; then
+      url=$(jq -r ".android.url[] | select(has(\"$i\")) | .\"$i\"" cfg.json)
+      if [[ "$url" == \$\(* ]]; then url=$(eval echo "$url"); fi
+      # echo "$url"
+      apk_files+=($(basename "$url"))
+      if [[ ! -f $(basename "$url") ]]; then wget --no-check-certificate "$url"; fi
+      
+    fi
+  done
+}
+
+# 安装文件
+install_application() {    
+  # printf '%s\n' "${apk_files[@]}"
+  for i in  "${apk_files[@]}"; do
+    adb install "$i"
+  done
+}
+
+function main() {
+  set -e
+  download_application
+  install_application    
+}
+
+main
+
+
+#+end_src

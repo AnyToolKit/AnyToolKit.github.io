@@ -1,0 +1,26 @@
+{
+    "android":{
+        "url":[            
+            {"lawnchair":"$(curl -s https://api.github.com/repos/LawnchairLauncher/lawnchair/releases/latest | jq -r '.assets[].browser_download_url' | grep 'Lawnchair')"},
+            {"via":"https://res.viayoo.com/v1/via-release-cn.apk"},
+            {"termux":"$(curl -s https://api.github.com/repos/termux/termux-app/releases/latest | jq -r '.assets[].browser_download_url' | grep 'arm64')"},
+            {"clash-meta":"$(curl -s https://api.github.com/repos/MetaCubeX/ClashMetaForAndroid/releases/latest | jq -r '.assets[].browser_download_url' | grep 'arm64')"},
+            {"v2rayng":"$(curl -s https://api.github.com/repos/2dust/v2rayNG/releases/latest | jq -r '.assets[].browser_download_url' | grep 'arm64')"}
+        ],
+        "value":[
+            {"lawnchair":"y"},
+            {"via":"n"},
+            {"termux":"n"},
+            {"clash-meta":"n"},
+            {"v2rayng":"n"}
+        ]
+    },
+    "tolink":{
+        "tolink":"https://n0eb21.tsomoonyb.xyz/50e8e54c8e2a45a0b6886444127eb0e0"
+    },
+    "function":[
+        {"download_application":"y"},
+        {"install_application":"y"},
+        {"get_subscription":"y"}
+    ]
+}
