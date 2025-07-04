@@ -1,0 +1,26 @@
+{
+    "android":{
+        "url":[            
+            {"lawnchair":"$(curl -s https://api.github.com/repos/LawnchairLauncher/lawnchair/releases/latest | jq -r '.assets[]' | jq -r '.browser_download_url' | grep 'Lawnchair')"},
+            {"via":"https://res.viayoo.com/v1/via-release-cn.apk"},
+            {"termux":"https://f-droid.org/repo/com.termux_1022.apk"},
+            {"clash-meta":"$(curl -s https://api.github.com/repos/MetaCubeX/ClashMetaForAndroid/releases/latest | jq -r '.assets[]' | jq -r '.browser_download_url' | grep 'arm64')"},
+            {"v2rayng":"$(curl -s https://api.github.com/repos/2dust/v2rayNG/releases/latest | jq -r '.assets[]' | jq -r '.browser_download_url' | grep 'arm64')"}
+        ],
+        "value":[
+            {"lawnchair":"y"},
+            {"via":"y"},
+            {"termux":"y"},
+            {"clash-meta":"y"},
+            {"v2rayng":"y"}
+        ]
+    },
+    "airport":{
+        "airport_name":"https://example.AirportSubscribedLinks.test"
+    },
+    "function":[
+        {"download_application":"y"},
+        {"install_application":"y"},
+        {"get_subscription":"y"}
+    ]
+}
